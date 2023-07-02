@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %} 
+<div>
+    <img src="{{ url_for('video') }}" width="50%"/>
+    <form method="post" action="{{ url_for('tasks') }}">
+    <br>
+    <!-- </form> -->
+      <label for="name" class="form-label">Name</label>
+      <input type="text"  name="VName">
+      <input type="submit" value="register" name="register"/>
+      <input type="submit" value="verify" name="verify"/>
+      <input type="submit" value="delete" name="delete"/>
+    </form>
+</div>
+{% endblock %}

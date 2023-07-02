@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+<div>
+{%for key in database.keys()%}
+{{key}}
+<br>
+{%endfor%}
+</div>
+{% endblock %}
