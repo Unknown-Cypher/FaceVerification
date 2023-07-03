@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request,Response,redirect
 import cv2
 import os
-import datetime
 import tensorflow as tf
 from tensorflow.keras.models import load_model
 from keras_facenet import FaceNet
@@ -22,7 +21,7 @@ capture , remove ,check= 0,0,0
 app = Flask(__name__)
 camera = cv2.VideoCapture(0)
 
-def add():#img,
+def add():
     global capture
     capture=0
     success,Img=camera.read()
@@ -34,12 +33,9 @@ def add():#img,
         x1, y1, width, height = 1, 1, 5, 5
     x1, y1 = abs(x1), abs(y1)
     x2, y2 = x1 + width, y1 + height
-    now = datetime.datetime.now()
-    p = os.path.sep.join(['Pictures', "{}.jpg".format(str(VName).replace(":",''))])
-    cv2.imwrite(p, Img)
-    Img = cv2.cvtColor(Img, cv2.COLOR_BGR2RGB)
-    Img = PIL.Image.fromarray(Img)                 
-    Img_array = np.asarray(Img)
+    Img1 = cv2.cvtColor(Img, cv2.COLOR_BGR2RGB)
+    Img1 = PIL.Image.fromarray(Img1)                 
+    Img_array = np.asarray(Img1)
     face = Img_array[y1:y2, x1:x2]                        
     face = PIL.Image.fromarray(face)                       
     face = face.resize((160,160))
@@ -47,9 +43,19 @@ def add():#img,
     face = np.expand_dims(face, axis=0)
     embedd = facenet.embeddings(face)
     embedd = embedd / np.linalg.norm(embedd, ord=2)
-    database[VName] = embedd
-    with open(database_file, 'wb') as f:
-        pickle.dump(database, f)
+    min_dist=0
+    identity=' '
+    for key, value in database.items() :
+        dist = np.dot(value,embedd.T)
+        if dist > min_dist:
+            min_dist = dist
+            identity = key
+    if min_dist < 0.7:
+        p = os.path.sep.join(['Pictures', "{}.jpg".format(str(VName).replace(":",''))])
+        cv2.imwrite(p, Img)
+        database[VName] = embedd
+        with open(database_file, 'wb') as f:
+            pickle.dump(database, f)
 
 
 def see(Img,x1,y1,x2,y2):
@@ -169,7 +175,7 @@ def generate_frames():
         
 
 @app.route('/home',methods=['POST','GET'])
-def Home():
+def home():
     global check
     if request.method == 'POST':
         if request.form.get('verify') == 'verify':
@@ -190,7 +196,6 @@ def Hello_world():
             gbr1 = cv2.imread(path)
             signature, _, _, _, _ = face_to_embeddings(gbr1)
             database[os.path.splitext(filename)[0]] = signature
-            #print('Embedding of ' + filename.split('.')[0] + " stored into the database")
     with open(database_file, 'wb') as f:
         pickle.dump(database, f)
     return redirect('/home')
@@ -205,7 +210,7 @@ def View():
     check = 0
     return render_template("view.html",database=database)
 
-@app.route('/register',methods=['POST','GET'])#verify the visitor if he exists before adding him
+@app.route('/register',methods=['POST','GET'])#show if the visitor is added or not
 def Register():
     global check,capture,VName
     check = 0
