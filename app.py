@@ -10,7 +10,6 @@ import pickle
 import cv2
 import PIL
 from PIL import Image
-#import visit
 HaarCascade = cv2.CascadeClassifier('haarcascade-frontalface-default.xml')
 facenet = FaceNet()
 folder='Pictures/'
@@ -169,12 +168,18 @@ def generate_frames():
                    b'Content-Type: image/jpeg\r\n\r\n' + Img + b'\r\n')
         
 
-@app.route('/home')
-def home():
+@app.route('/home',methods=['POST','GET'])
+def Home():
+    global check
+    if request.method == 'POST':
+        if request.form.get('verify') == 'verify':
+            check = 1
+    elif request.method == 'GET':
+         return render_template('index.html')
     return render_template('index.html')
 
 @app.route("/")
-def hello_world():
+def Hello_world():
     global database
     if os.path.exists(database_file):
         with open(database_file, 'rb') as f:
@@ -194,35 +199,34 @@ def hello_world():
 def video():
     return Response(generate_frames(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
-@app.route('/register_visitor',methods=['POST','GET'])
-def tasks():
-    global check,capture,VName,remove,database
-    if request.method == 'POST':
-        if request.form.get('register') == 'register':
-            capture=1
-            check=0
-            VName = request.form['VName']
-        elif request.form.get('verify') == 'verify':
-            check = 1
-        elif request.form.get('delete') == 'delete':
-            remove = 1
-            check = 0
-        
-    elif request.method == 'GET':
-         return redirect('/home')
-    return redirect('/home')
-
 @app.route('/view')
 def View():
     global check
     check = 0
     return render_template("view.html",database=database)
 
-@app.route('/verify')
-def Verify():
-    return render_template('verify.html')
+@app.route('/register',methods=['POST','GET'])#verify the visitor if he exists before adding him
+def Register():
+    global check,capture,VName
+    check = 0
+    if request.method == 'POST':
+        if request.form.get('register') == 'register':
+            capture=1
+            VName = request.form['VName']
+    elif request.method == 'GET':
+         return render_template('register.html')
+    return render_template('register.html')
 
-
+@app.route('/delete',methods=['POST','GET'])#show if visitor is deleted or not
+def Delete():
+    global check,remove
+    check = 0
+    if request.method == 'POST':
+        if request.form.get('delete') == 'delete':
+            remove = 1
+    elif request.method == 'GET':
+         return render_template('delete.html')
+    return render_template('delete.html')
 
 if __name__ == '__main__':
     app.run(debug = True)
