@@ -2,7 +2,8 @@
 {% block content %} 
 <img src="{{ url_for('video') }}" width="50%"/>
 <br>
-<form method="post" action="{{ url_for('tasks') }}">
+<br>
+<form method="post" action="{{ url_for('Delete') }}">
     <input type="submit" value="delete" name="delete"/>
 </form>
 {% endblock %}
