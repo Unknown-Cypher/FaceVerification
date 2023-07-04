@@ -1,15 +1,22 @@
 {% extends "layout.html" %}
 {% block content %} 
-<div>
+<h2>Face Verification !!</h2>
+<div class="gunnu">
+  <div class="gunnu_c1">
     <img src="{{ url_for('video') }}" width="50%"/>
+  </div>
+  <div class="gunnu_c2">
     <form method="post" action="{{ url_for('home') }}">
-    <br>
-    <!-- </form> -->
-      <!-- <label for="name" class="form-label">Name</label> -->
-      <!-- <input type="text"  name="VName"> -->
-      <!-- <input type="submit" value="register" name="register"/> -->
-      <input type="submit" value="verify" name="verify"/>
-      <!-- <input type="submit" value="delete" name="delete"/> -->
-    </form>
+ 
+      <!-- </form> -->
+        <!-- <label for="name" class="form-label">Name</label> -->
+        <!-- <input type="text"  name="VName"> -->
+        <!-- <input type="submit" value="register" name="register"/> -->
+        <input type="submit" value="verify" name="verify"/>
+        <!-- <input type="submit" value="delete" name="delete"/> -->
+      </form>
+  </div>
+  
+   
 </div>
 {% endblock %}
