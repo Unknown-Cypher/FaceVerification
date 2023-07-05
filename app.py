@@ -208,7 +208,7 @@ def video():
 def View():
     global check
     check = 0
-    return render_template("view.html",database=database)
+    return render_template("view.html",database=enumerate(database.keys()))
 
 @app.route('/register',methods=['POST','GET'])#show if the visitor is added or not
 def Register():
