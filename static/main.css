@@ -1,5 +1,6 @@
 body{
     background-color:#2d2d30;
+    color:white
 }
 
 .nav{
@@ -18,7 +19,8 @@ body{
 .nav-item:hover{
     background-color: black;
 }
-h2{border: 2px solid green;
+h2{
+    /* border: 2px solid green; */
     /* position: absolute; */
     padding-left: 40%;
     color : white;
@@ -31,10 +33,11 @@ h2{border: 2px solid green;
     flex-direction: column;
     align-items:center;
 }
-.gunnu_c1{
-    /* border: 2px solid pink; */
+/* .gunnu_c1{
+    /* border: 2px solid pink; 
 
-}
+} 
+*/
 .gunnu_c1 img {
     position: relative;
         width: 100%;
@@ -42,11 +45,67 @@ h2{border: 2px solid green;
 }
 .gunnu_c2 form input{
     /* border: 2px solid yellow; */
+    cursor: pointer;
+
     margin-top: 30px;
     width: 90px;
     height: 40px;
     background-color: #252526;
     border-radius: 10px;
-    color :white;
+    color :black;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
     /* width: 100%; */
+    background-color: #4E4FEB;
+    border: transparent;
+    transition: .3s ease-in-out;
+    -webkit-transition-property: box-shadow,transform;
+    transition-property:box-shadow,transform ;
 }
+.gunnu_c2 form input:hover{
+    background: rgb(	78,	79	,235, 0.5);
+    box-shadow: 1px 5px 7px 1px rgba(0,0,0,0.2);
+
+}
+/* .gunnu_c3{
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.gunnu_c3 form {
+    border: 2px solid maroon;
+        display: flex;
+        flex-direction: column;
+    width: 250px;
+    /* line-height: 10px; */
+    /* line-height: 20px;
+}
+.form-label{
+    color: white;
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-weight:200;
+   
+}
+.inp_v{
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-bottom: 10px;
+
+}
+.input-box{
+    background-color: rgba(0,0,0,0.2); */
+    /* outline: none;
+    transition: .2s ease;
+    border-radius: 2.1px;
+    border:transparent ;
+
+}
+.input-box:hover , .input-box:focus{
+    background: rgba(255, 255, 225, 0.25);
+} */
+
+
+
+
+        
+      

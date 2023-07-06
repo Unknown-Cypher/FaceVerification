@@ -1,9 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
-<div>
-{%for key in database.keys()%}
-{{key}}
+<h2>Visitors</h2>
 <br>
+<div>
+    <table class="table">
+    <thead>
+    <tr>
+    <th scope="col">SNo.</th>
+    <th scope="col">Name</th>
+</tr>
+</thead>
+<tbody>
+{%for i,key in database%}
+<tr>
+<td>{{i}}</td>
+<td>{{key}}</td>
+</tr>
 {%endfor%}
+</tbody>
+</table>
 </div>
 {% endblock %}

@@ -1,10 +1,17 @@
 {% extends "layout.html" %}
 {% block content %} 
+<h2>Delete Here</h2>
+<div class="gunnu">
+    <div class="gunnu_c1">
+        <img src="{{ url_for('video') }}" width="50%"/>
+    </div>
+    <div class="gunnu_c2">
+        <form method="post" action="{{ url_for('Delete') }}">
+            <input type="submit" value="delete" name="delete"/>
+        </form>
+    </div>
+</div>
 
-<img src="{{ url_for('video') }}" width="50%"/>
-<br>
-<br>
-<form method="post" action="{{ url_for('Delete') }}">
-    <input type="submit" value="delete" name="delete"/>
-</form>
+
+
 {% endblock %}

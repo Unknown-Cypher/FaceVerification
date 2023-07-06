@@ -9,6 +9,7 @@ import pickle
 import cv2
 import PIL
 from PIL import Image
+from flask_sqlalchemy import SQLAlchemy
 HaarCascade = cv2.CascadeClassifier('haarcascade-frontalface-default.xml')
 facenet = FaceNet()
 folder='Pictures/'
@@ -19,6 +20,16 @@ database = {}
 global capture , VName , remove ,check
 capture , remove ,check= 0,0,0
 app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# db = SQLAlchemy(app)
+# class Member(db.Model):
+#     id = db.Column(db.Integer(),primary_key=True)
+#     name = db.Column(db.String(),nullable=False)
+#     no = db.Column(db.String(10),nullable=False)
+#     address = db.Column(db.String(),nullable=False)
+# with app.app_context():
+#     db.create_all()
+#     db.session.commit()
 camera = cv2.VideoCapture(0)
 
 def add():
@@ -208,6 +219,7 @@ def video():
 def View():
     global check
     check = 0
+    # items=Member.query.all()
     return render_template("view.html",database=enumerate(database.keys()))
 
 @app.route('/register',methods=['POST','GET'])#show if the visitor is added or not
@@ -218,6 +230,9 @@ def Register():
         if request.form.get('register') == 'register':
             capture=1
             VName = request.form['VName']
+            # mem=Member(name=request.form['VName'],no=request.form['number'],address=request.form['address'])
+            # db.session.add(mem)
+            # db.session.commit()
     elif request.method == 'GET':
          return render_template('register.html')
     return render_template('register.html')
